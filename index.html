@@ -1,94 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StorePilot — Marketplace Dashboard</title>
-<style>
-:root{--bg:#f5f7fb;--panel:#fff;--ink:#172033;--muted:#667085;--brand:#2563eb;--line:#e6eaf0;--green:#16a34a}
-*{box-sizing:border-box}body{margin:0;font-family:Arial, sans-serif;background:var(--bg);color:var(--ink)}
-header{background:#101828;color:white;padding:18px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.logo{font-size:22px;font-weight:800}.logo span{color:#60a5fa}
-header small{color:#cbd5e1}.wrap{max-width:1100px;margin:28px auto;padding:0 16px}
-h1{font-size:28px;margin:0 0 8px}.sub{color:var(--muted);margin:0 0 22px}
-.notice{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;padding:12px 14px;border-radius:10px;margin-bottom:20px;font-size:14px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
-.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
-.stat small{color:var(--muted)}.stat strong{display:block;font-size:25px;margin-top:8px}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
-button{border:0;border-radius:9px;padding:11px 15px;background:#e9eef8;color:#24324a;font-weight:700;cursor:pointer}
-button.active,button.primary{background:var(--brand);color:white}
-.panel h2{font-size:18px;margin:0 0 14px}
-.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
-input,select{width:100%;padding:11px;border:1px solid #d0d5dd;border-radius:8px;margin:6px 0 12px;font-size:15px}
-label{font-size:13px;font-weight:700;color:#475467}
-.action{display:inline-block;margin-top:5px}
-table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line)}th{color:var(--muted)}
-.pill{background:#dcfce7;color:#166534;padding:4px 8px;border-radius:20px;font-size:12px}
-.hidden{display:none}.empty{color:var(--muted);font-size:14px;line-height:1.6}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:28px}
-@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.wrap{margin:20px auto}h1{font-size:24px}}
-@media(max-width:380px){.stats{grid-template-columns:1fr 1fr}.stat{padding:13px}}
-</style>
-</head>
-<body>
-<header><div class="logo">Store<span>Pilot</span></div><small>Marketplace • Multi-vendor • Dropshipping</small></header>
-<main class="wrap">
-<h1>Welcome to StorePilot</h1>
-<p class="sub">Your business control center — starter demo</p>
-<div class="notice"><b>Starter version:</b> This is a front-end demo. Products and orders are sample data saved only in this page; payments, login, supplier sync and a database are not connected yet.</div>
-<section class="stats">
-<div class="stat"><small>Total products</small><strong id="productCount">3</strong></div>
-<div class="stat"><small>Active sellers</small><strong>2</strong></div>
-<div class="stat"><small>Orders today</small><strong>0</strong></div>
-<div class="stat"><small>Sales today</small><strong>Rs. 0</strong></div>
-</section>
-<nav class="tabs">
-<button class="active" data-tab="products">Products</button><button data-tab="sellers">Sellers</button><button data-tab="suppliers">Suppliers</button><button data-tab="orders">Orders</button>
-</nav>
-<section id="products" class="tab panel">
-<h2>Marketplace products</h2>
-<table><thead><tr><th>Product</th><th>Type</th><th>Price</th><th>Status</th></tr></thead><tbody id="productRows">
-<tr><td>Wireless Earbuds</td><td>Seller</td><td>Rs. 2,499</td><td><span class="pill">Active</span></td></tr>
-<tr><td>Smart Watch</td><td>Dropship</td><td>Rs. 3,999</td><td><span class="pill">Active</span></td></tr>
-<tr><td>Phone Stand</td><td>Seller</td><td>Rs. 799</td><td><span class="pill">Active</span></td></tr>
-</tbody></table>
-</section>
-<section id="sellers" class="tab panel hidden"><h2>Seller center</h2><p class="empty">Sellers will be able to register, submit products, manage stock and view their orders here. Seller accounts and approvals require a backend.</p></section>
-<section id="suppliers" class="tab panel hidden"><h2>Dropshipping suppliers</h2><p class="empty">Connect suppliers, import their product catalogues and sync stock/prices here. Supplier integrations are not connected in this starter demo.</p></section>
-<section id="orders" class="tab panel hidden"><h2>Orders</h2><p class="empty">Customer orders will appear here after checkout and database integration.</p></section>
-<div class="grid" style="margin-top:16px">
-<section class="panel"><h2>Add a demo product</h2>
-<label for="name">Product name</label><input id="name" placeholder="e.g. Bluetooth Speaker">
-<label for="price">Price (PKR)</label><input id="price" type="number" min="1" placeholder="e.g. 2500">
-<label for="type">Product source</label><select id="type"><option>Seller</option><option>Dropship</option></select>
-<button class="primary action" id="add">Add product</button>
-</section>
-<section class="panel"><h2>Next development steps</h2><ol class="empty"><li>Build a secure backend and database</li><li>Add customer and seller accounts</li><li>Add cart, checkout and order management</li><li>Integrate payment and delivery providers</li><li>Build supplier import and stock sync</li></ol></section>
-</div>
-</main>
-<footer>StorePilot starter • Built as a first project upload</footer>
-<script>
-document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{
- document.querySelectorAll('[data-tab]').forEach(b=>b.classList.remove('active'));
- document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));
- btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.remove('hidden');
-}));
-document.getElementById('add').addEventListener('click',()=>{
- const name=document.getElementById('name').value.trim();
- const price=Number(document.getElementById('price').value);
- const type=document.getElementById('type').value;
- if(!name||!Number.isFinite(price)||price<=0){alert('Enter a product name and a valid price.');return;}
- const row=document.createElement('tr');
- [name,type,'Rs. '+price.toLocaleString('en-PK'), 'Active'].forEach((value,i)=>{
-  const td=document.createElement('td');td.textContent=value;
-  if(i===3){const pill=document.createElement('span');pill.className='pill';pill.textContent=value;td.textContent='';td.appendChild(pill);}
-  row.appendChild(td);
- });
- document.getElementById('productRows').appendChild(row);
- document.getElementById('productCount').textContent=document.getElementById('productRows').children.length;
- document.getElementById('name').value='';document.getElementById('price').value='';
-});
-</script>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>StorePilot V2</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f4f6fb;color:#182235;font-family:Arial,sans-serif}header{background:#101a2d;color:white;padding:18px 5%;font-size:24px;font-weight:bold}header span{color:#70a5ff}main{max-width:1050px;margin:24px auto;padding:0 15px}.hero{background:linear-gradient(120deg,#142747,#2563eb);color:white;padding:25px;border-radius:18px}.hero p{line-height:1.5}.warn{background:#fff4d9;padding:12px;border-radius:10px;font-size:13px;line-height:1.5;margin:15px 0}.nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.nav button,button{border:0;border-radius:9px;padding:11px 14px;background:#e8edf7;color:#24324a;font-weight:bold;cursor:pointer}.nav .on,button.primary{background:#2563eb;color:white}.panel{background:white;border:1px solid #e2e7ef;border-radius:15px;padding:17px;margin:14px 0}.hidden{display:none}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.item{border:1px solid #e2e7ef;border-radius:12px;overflow:hidden}.pic{background:#edf3ff;text-align:center;padding:22px;font-size:42px}.body{padding:12px}.price{font-weight:bold;font-size:18px;margin:7px 0}.tag{font-size:11px;color:#166534;background:#e4f7eb;border-radius:20px;padding:4px 8px}input{width:100%;padding:11px;border:1px solid #ccd4e0;border-radius:8px;margin:5px 0 12px}label{font-weight:bold;font-size:13px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{background:white;padding:14px;border:1px solid #e2e7ef;border-radius:12px}.stat b{display:block;font-size:23px;margin-top:5px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:10px;border-bottom:1px solid #e2e7ef}.muted{color:#667085;font-size:13px;line-height:1.5}@media(max-width:650px){.grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}@media(max-width:390px){.grid{grid-template-columns:1fr}}</style></head><body>
+<header>Store<span>Pilot</span> <small style="font-size:13px;font-weight:normal">Marketplace · Multi-vendor · Dropshipping</small></header><main>
+<section class="hero"><h1>Welcome to StorePilot V2</h1><p>Shop products from independent sellers and supplier-powered listings.</p></section>
+<div class="warn"><b>Prototype notice:</b> This version is a browser-only demo. It has no shared database, real accounts, payment processing, shipping integration or live supplier API. Do not accept real orders or enter sensitive information.</div>
+<div class="stats"><div class="stat">Products<b id="pc">6</b></div><div class="stat">Seller listings<b id="sc">3</b></div><div class="stat">Dropship listings<b id="dc">3</b></div><div class="stat">Demo orders<b id="oc">0</b></div></div>
+<nav class="nav"><button class="on" data-tab="shop">Customer Store</button><button data-tab="cart">Cart (<span id="cc">0</span>)</button><button data-tab="seller">Seller Center</button><button data-tab="supplier">Supplier Center</button><button data-tab="orders">Orders</button><button data-tab="admin">Admin</button></nav>
+<section id="shop" class="panel tab"><h2>Shop products</h2><input id="search" placeholder="Search products"><div id="products" class="grid"></div></section>
+<section id="cart" class="panel tab hidden"><h2>Shopping cart</h2><div id="cartlist"></div><p id="total">Total: Rs. 0</p><button class="primary" id="checkout">Place demo COD order</button><p class="muted">Demo only. No payment or delivery is made.</p></section>
+<section id="seller" class="panel tab hidden"><h2>Seller Center</h2><p class="muted">Publish a sample seller listing to the storefront on this device.</p><label>Product name</label><input id="sname" placeholder="Product name"><label>Price (PKR)</label><input id="sprice" type="number" placeholder="2500"><button class="primary" id="addseller">Publish demo listing</button><div id="sellerlist"></div></section>
+<section id="supplier" class="panel tab hidden"><h2>Supplier Center</h2><p class="muted">Import sample products. This does not connect to an actual supplier.</p><div id="suppliers" class="grid"></div></section>
+<section id="orders" class="panel tab hidden"><h2>Order management</h2><div id="orderlist" class="muted">No demo orders yet.</div></section>
+<section id="admin" class="panel tab hidden"><h2>Admin overview</h2><p>Planned controls: seller approvals, product moderation, commissions, disputes, shipping and payment monitoring.</p><p class="muted">Real admin permissions require secure server-side authentication and a database.</p></section>
+</main><script>
+const seed=[['Wireless Earbuds',2499,'Seller','🎧'],['Smart Watch',3999,'Dropship','⌚'],['Phone Stand',799,'Seller','📱'],['Travel Backpack',2899,'Dropship','🎒'],['Bluetooth Speaker',3199,'Seller','🔊'],['Desk Lamp',1899,'Dropship','💡']];
+let products=JSON.parse(localStorage.sp_products||'null')||seed.map((x,i)=>({id:i+1,name:x[0],price:x[1],source:x[2],emoji:x[3]})),cart=JSON.parse(localStorage.sp_cart||'[]'),orders=JSON.parse(localStorage.sp_orders||'[]');
+const money=n=>'Rs. '+n.toLocaleString('en-PK');function save(){localStorage.sp_products=JSON.stringify(products);localStorage.sp_cart=JSON.stringify(cart);localStorage.sp_orders=JSON.stringify(orders)}
+function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){let q=(document.getElementById('search').value||'').toLowerCase();document.getElementById('products').innerHTML=products.filter(p=>p.name.toLowerCase().includes(q)).map(p=>`<article class="item"><div class="pic">${p.emoji||'📦'}</div><div class="body"><span class="tag">${p.source}</span><h3>${safe(p.name)}</h3><div class="price">${money(p.price)}</div><button class="primary" onclick="add(${p.id})">Add to cart</button></div></article>`).join('')||'No products found';
+let counts={};cart.forEach(id=>counts[id]=(counts[id]||0)+1);let entries=Object.entries(counts).map(([id,n])=>({p:products.find(p=>p.id==id),n})).filter(x=>x.p);document.getElementById('cartlist').innerHTML=entries.length?entries.map(x=>`<p>${safe(x.p.name)} × ${x.n} — <b>${money(x.p.price*x.n)}</b> <button onclick="removeItem(${x.p.id})">Remove</button></p>`).join(''):'Your cart is empty';document.getElementById('total').textContent='Total: '+money(entries.reduce((s,x)=>s+x.p.price*x.n,0));document.getElementById('cc').textContent=cart.length;
+let sellers=products.filter(p=>p.source==='Seller'),drops=products.filter(p=>p.source==='Dropship');document.getElementById('sellerlist').innerHTML='<h3>Your seller listings</h3>'+sellers.map(p=>`<p>${safe(p.name)} — ${money(p.price)}</p>`).join('');document.getElementById('suppliers').innerHTML=[['Portable Blender',2799,'🥤'],['LED Strip Lights',1299,'💡'],['Car Phone Holder',999,'🚗']].map((p,i)=>`<article class="item"><div class="pic">${p[2]}</div><div class="body"><h3>${p[0]}</h3><b>${money(p[1])}</b><p><button onclick="importProduct(${i})">Import demo product</button></p></div></article>`).join('');
+document.getElementById('orderlist').innerHTML=orders.length?'<table><tr><th>Order</th><th>Items</th><th>Total</th><th>Status</th></tr>'+orders.map(o=>`<tr><td>#${o.id}</td><td>${o.count}</td><td>${money(o.total)}</td><td>Demo received</td></tr>`).join('')+'</table>':'No demo orders yet';document.getElementById('pc').textContent=products.length;document.getElementById('sc').textContent=sellers.length;document.getElementById('dc').textContent=drops.length;document.getElementById('oc').textContent=orders.length}
+function add(id){cart.push(id);save();render()}function removeItem(id){cart=cart.filter(x=>x!==id);save();render()}function importProduct(i){let a=[['Portable Blender',2799,'🥤'],['LED Strip Lights',1299,'💡'],['Car Phone Holder',999,'🚗']][i];products.push({id:Date.now(),name:a[0],price:a[1],source:'Dropship',emoji:a[2]});save();render();alert('Sample product imported.')}
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('on'));document.querySelectorAll('.tab').forEach(x=>x.classList.add('hidden'));b.classList.add('on');document.getElementById(b.dataset.tab).classList.remove('hidden')});
+document.getElementById('search').oninput=render;document.getElementById('addseller').onclick=()=>{let n=document.getElementById('sname').value.trim(),p=Number(document.getElementById('sprice').value);if(!n||p<=0){alert('Enter product name and valid price');return}products.push({id:Date.now(),name:n,price:p,source:'Seller',emoji:'📦'});document.getElementById('sname').value='';document.getElementById('sprice').value='';save();render();alert('Demo listing published')};
+document.getElementById('checkout').onclick=()=>{if(!cart.length){alert('Cart is empty');return}let total=cart.reduce((s,id)=>s+(products.find(p=>p.id===id)?.price||0),0);orders.unshift({id:String(Date.now()).slice(-6),count:cart.length,total});cart=[];save();render();alert('Demo order saved on this device only')};render();
+</script></body></html>
